@@ -32,7 +32,7 @@ internal/
 ├── config/         # Environment-based configuration
 ├── fetcher/        # HTTP client for OpenWeather API
 ├── transformer/    # Payload parsing & field extraction
-├── storage/        # JSONL file writers + mock DB
+├── storage/        # JSONL file writers + PostgreSQL client
 └── observability/  # slog JSON logger + Prometheus metrics + HTTP server
 cmd/etl/main.go     # Entry point, ticker loop, graceful shutdown
 ```
@@ -77,7 +77,7 @@ docker-compose up -d --build
 
 | Container | Role | Persistence |
 |---|---|---|
-| `db` (postgres:15-alpine) | Stores raw payloads in `raw_weather_data` table | `./postgres_data` → `/var/lib/postgresql/data` |
+| `db` (postgres:15-alpine) | Stores raw and processed records in `raw_weather_data` and `processed_weather_data` tables | `./postgres_data` → `/var/lib/postgresql/data` |
 | `app` (Go binary) | Runs the ETL loop, writes files, exposes metrics | `./data/raw`, `./data/processed`, `./logs` mounted as volumes |
 
 The `app` container will not start until the `db` container passes its healthcheck (`pg_isready`), preventing connection errors on startup.
