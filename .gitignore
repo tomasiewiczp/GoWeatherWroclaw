@@ -1,0 +1,6 @@
+.env
+data/raw/*.json
+data/processed/*.json
+logs/*.log
+etl-pipeline
+postgres_data/
