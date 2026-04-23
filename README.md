@@ -1,6 +1,6 @@
 # OpenWeather ETL Pipeline
 
-A production-grade background worker written in Go that continuously extracts weather data from the [OpenWeather Current Weather Data API 2.5](https://openweathermap.org/current), stores the raw payload in a local Data Lake, transforms it into a normalised structure, and exposes operational metrics in Prometheus format.
+A background service written in Go that fetches current weather conditions from the [OpenWeather API](https://openweathermap.org/current) on a configurable interval, stores both the raw API response and a normalised record in PostgreSQL, and exposes operational metrics via Prometheus.
 
 ---
 
@@ -229,7 +229,7 @@ The current implementation is a single-binary daemon suitable for a single machi
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         AWS / GCP                               │
+│                         AWS                                     │
 │                                                                 │
 │  Scheduler          Worker              Storage                 │
 │  ──────────         ──────────          ────────                │
